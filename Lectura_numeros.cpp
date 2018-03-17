@@ -151,8 +151,7 @@ string conversor(string& a){
 }
 int main(){
 	string a;
-	while(cin>>a){
-		cout<<conversor(a)<<endl;
-	}
+	cin>>a;
+	cout<<conversor(a)<<endl;
 	return 0;
 }
