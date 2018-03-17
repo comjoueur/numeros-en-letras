@@ -22,13 +22,8 @@ void tresdigitos(string &a,string &rsp,int i=0){
     	else if(a[i]=='9')
         	rsp+="novecientos ";
     	if(a[i+1]=='0'){
-        	if(a[i+2]=='1'){
-			if(a.size()-1!=i+2){
-				rsp+="y un ";
-			}
-			else rsp+="uno ";
-		}
-        	else if(a[i+2]=='2')rsp+="dos ";
+		//el caso del uno es especial
+        	if(a[i+2]=='2')rsp+="dos ";
         	else if(a[i+2]=='3')rsp+="tres ";
         	else if(a[i+2]=='4')rsp+="cuatro ";
         	else if(a[i+2]=='5')rsp+="cinco ";
@@ -118,28 +113,38 @@ void tresdigitos(string &a,string &rsp,int i=0){
 			rsp+="y siete ";
 		else if(a[i+2]=='8')
 			rsp+="y ocho ";
-		else if(a[i+2]=='8')
+		else if(a[i+2]=='9')
 			rsp+="y nueve ";
 	}
+	string t;
 	if(i+3==3){
-		if(!(a[i]=='0' && a[i+1]=='0' && a[i+2]=='0'))rsp+="mil millones ";
+		for(int j=0;j<=i+2;j++)t+=a[j];
+		if(t>="001")rsp+="mil ";
 		tresdigitos(a,rsp,i+3);
 	}
 	else if(i+3==6){
-		if(!(a[i]=='0' && a[i+1]=='0' && a[i+2]=='0'))rsp+="millones ";
+		for(int j=0;j<=i+2;j++)t+=a[j];
+		if(t>"000001")rsp+="millones ";
+		else if(t=="000001")rsp+="un millon ";
 		tresdigitos(a,rsp,i+3);
 	}
 	else if(i+3==9){
-		if(!(a[i]=='0' && a[i+1]=='0' && a[i+2]=='0'))rsp+="mil ";
+		for(int j=i;j<=i+2;j++)t+=a[j];
+		if(t>="001")rsp+="mil ";
 		tresdigitos(a,rsp,i+3);
+	}
+	else{
+		if(a[i+1]=='0' && a[i+2]=='1'){
+			rsp+="uno ";
+		}
 	}
 }
 string conversor(string a){
 	string h;
 	for(int i=0;i<12-a.size();i++)h+='0';
 	h+=a;
-	if(h=="000000001000"){
-		return" mil ";
+	/*if(h=="000000001000"){
+		return "mil ";
 	}
 	else if(h=="000001000000"){
 		return "un millon ";
@@ -147,12 +152,12 @@ string conversor(string a){
 	else if(h=="001000000000"){
 		return "mil millones ";
 	}
-	else{
+	*/
+	//else{
 		string rsp;
 		tresdigitos(h,rsp);
 		return rsp;
-	}
-	return 0;
+	//}
 }
 int main(){
 	string a;
